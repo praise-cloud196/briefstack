@@ -1,0 +1,261 @@
+/**
+ * DESIGN SYSTEM VARIABLES
+ * Generated automatically from JSON design tokens.
+ */
+
+:root {
+  /* ==========================================================================
+     TYPOGRAPHY TOKENS
+     ========================================================================== */
+
+  /* display large */
+  --font-display-large-family: Inter, sans-serif;
+  --font-display-large-size: 62px;
+  --font-display-large-weight: 400;
+  --font-display-large-line-height: 93px;
+  --font-display-large-letter-spacing: -2.17px;
+  --font-display-large-style: normal;
+  --font-display-large-text-decoration: none;
+
+  /* display medium */
+  --font-display-medium-family: Inter, sans-serif;
+  --font-display-medium-size: 56px;
+  --font-display-medium-weight: 400;
+  --font-display-medium-line-height: 84px;
+  --font-display-medium-letter-spacing: -1.96px;
+  --font-display-medium-style: normal;
+  --font-display-medium-text-decoration: none;
+
+  /* display small */
+  --font-display-small-family: Inter, sans-serif;
+  --font-display-small-size: 44px;
+  --font-display-small-weight: 400;
+  --font-display-small-line-height: 66px;
+  --font-display-small-letter-spacing: -1.1px;
+  --font-display-small-style: normal;
+  --font-display-small-text-decoration: none;
+
+  /* headline large */
+  --font-headline-large-family: Inter, sans-serif;
+  --font-headline-large-size: 38px;
+  --font-headline-large-weight: 500;
+  --font-headline-large-line-height: 57px;
+  --font-headline-large-letter-spacing: -0.836px;
+  --font-headline-large-style: normal;
+  --font-headline-large-text-decoration: none;
+
+  /* headline medium */
+  --font-headline-medium-family: Inter, sans-serif;
+  --font-headline-medium-size: 32px;
+  --font-headline-medium-weight: 500;
+  --font-headline-medium-line-height: 48px;
+  --font-headline-medium-letter-spacing: -0.576px;
+  --font-headline-medium-style: normal;
+  --font-headline-medium-text-decoration: none;
+
+  /* headline small */
+  --font-headline-small-family: Inter, sans-serif;
+  --font-headline-small-size: 28px;
+  --font-headline-small-weight: 500;
+  --font-headline-small-line-height: 42px;
+  --font-headline-small-letter-spacing: -0.336px;
+  --font-headline-small-style: normal;
+  --font-headline-small-text-decoration: none;
+
+  /* title large */
+  --font-title-large-family: Inter, sans-serif;
+  --font-title-large-size: 24px;
+  --font-title-large-weight: 500;
+  --font-title-large-line-height: 36px;
+  --font-title-large-letter-spacing: -0.6px;
+  --font-title-large-style: normal;
+  --font-title-large-text-decoration: none;
+
+  /* title medium */
+  --font-title-medium-family: Inter, sans-serif;
+  --font-title-medium-size: 18px;
+  --font-title-medium-weight: 500;
+  --font-title-medium-line-height: 27px;
+  --font-title-medium-letter-spacing: -0.36px;
+  --font-title-medium-style: normal;
+  --font-title-medium-text-decoration: none;
+
+  /* title small */
+  --font-title-small-family: Inter, sans-serif;
+  --font-title-small-size: 16px;
+  --font-title-small-weight: 500;
+  --font-title-small-line-height: 24px;
+  --font-title-small-letter-spacing: -0.24px;
+  --font-title-small-style: normal;
+  --font-title-small-text-decoration: none;
+
+  /* body large */
+  --font-body-large-family: Inter, sans-serif;
+  --font-body-large-size: 18px;
+  --font-body-large-weight: 400;
+  --font-body-large-line-height: 27px;
+  --font-body-large-letter-spacing: -0.396px;
+  --font-body-large-style: normal;
+  --font-body-large-text-decoration: none;
+
+  /* body medium */
+  --font-body-medium-family: Inter, sans-serif;
+  --font-body-medium-size: 16px;
+  --font-body-medium-weight: 400;
+  --font-body-medium-line-height: 24px;
+  --font-body-medium-letter-spacing: -0.288px;
+  --font-body-medium-style: normal;
+  --font-body-medium-text-decoration: none;
+
+  /* body small */
+  --font-body-small-family: Inter, sans-serif;
+  --font-body-small-size: 14px;
+  --font-body-small-weight: 500;
+  --font-body-small-line-height: 21px;
+  --font-body-small-letter-spacing: -0.168px;
+  --font-body-small-style: normal;
+  --font-body-small-text-decoration: none;
+
+  /* label large */
+  --font-label-large-family: Inter, sans-serif;
+  --font-label-large-size: 16px;
+  --font-label-large-weight: 500;
+  --font-label-large-line-height: 24px;
+  --font-label-large-letter-spacing: -0.352px;
+  --font-label-large-style: normal;
+  --font-label-large-text-decoration: none;
+
+  /* label medium */
+  --font-label-medium-family: Inter, sans-serif;
+  --font-label-medium-size: 14px;
+  --font-label-medium-weight: 500;
+  --font-label-medium-line-height: 21px;
+  --font-label-medium-letter-spacing: -0.252px;
+  --font-label-medium-style: normal;
+  --font-label-medium-text-decoration: none;
+
+  /* label small */
+  --font-label-small-family: Inter, sans-serif;
+  --font-label-small-size: 13px;
+  --font-label-small-weight: 500;
+  --font-label-small-line-height: 19.5px;
+  --font-label-small-letter-spacing: -0.156px;
+  --font-label-small-style: normal;
+  --font-label-small-text-decoration: none;
+
+  /* ==========================================================================
+     COLOR ROLES - LIGHT THEME (DEFAULT)
+     ========================================================================== */
+  --color-primary: hsl(223, 48%, 23%);
+  --color-on-primary: hsl(0, 0%, 100%);
+  --color-primary-container: hsl(226, 80%, 84%);
+  --color-on-primary-container: hsl(224, 35%, 33%);
+  --color-secondary: hsl(196, 30%, 35%);
+  --color-on-secondary: hsl(0, 0%, 100%);
+  --color-secondary-container: hsl(197, 45%, 76%);
+  --color-on-secondary-container: hsl(195, 41%, 25%);
+  --color-tertiary: hsl(29, 56%, 33%);
+  --color-on-tertiary: hsl(0, 0%, 100%);
+  --color-tertiary-container: hsl(28, 92%, 75%);
+  --color-on-tertiary-container: hsl(30, 73%, 24%);
+  --color-error: hsl(0, 0%, 0%);
+  --color-on-error: hsl(220, 10%, 11%);
+  --color-error-container: hsl(220, 10%, 11%);
+  --color-on-error-container: hsl(0, 0%, 0%);
+  --color-background: hsl(240, 100%, 99%);
+  --color-on-background: hsl(220, 10%, 11%);
+  --color-surface: hsl(240, 100%, 99%);
+  --color-on-surface: hsl(220, 10%, 11%);
+  --color-surface-variant: hsl(200, 5%, 89%);
+  --color-on-surface-variant: hsl(200, 2%, 28%);
+  --color-outline: hsl(200, 1%, 46%);
+  --color-outline-variant: hsl(200, 3%, 78%);
+  --color-inverse-surface: hsl(230, 6%, 20%);
+  --color-inverse-on-surface: hsl(240, 25%, 95%);
+  --color-inverse-primary: hsl(226, 80%, 84%);
+  --color-surface-dim: hsl(240, 9%, 86%);
+  --color-surface-bright: hsl(240, 100%, 99%);
+  --color-surface-container-lowest: hsl(0, 0%, 100%);
+  --color-surface-container-low: hsl(240, 33%, 96%);
+  --color-surface-container: hsl(240, 20%, 94%);
+  --color-surface-container-high: hsl(240, 12%, 92%);
+  --color-surface-container-highest: hsl(240, 12%, 90%);
+}
+
+/* Dark Theme support (system preferred) */
+@media (prefers-color-scheme: dark) {
+  :root {
+  --color-primary: hsl(223, 48%, 23%);
+  --color-on-primary: hsl(223, 48%, 23%);
+  --color-primary-container: hsl(224, 35%, 33%);
+  --color-on-primary-container: hsl(229, 100%, 93%);
+  --color-secondary: hsl(197, 45%, 76%);
+  --color-on-secondary: hsl(193, 78%, 15%);
+  --color-secondary-container: hsl(195, 41%, 25%);
+  --color-on-secondary-container: hsl(197, 82%, 87%);
+  --color-tertiary: hsl(28, 92%, 75%);
+  --color-on-tertiary: hsl(31, 100%, 15%);
+  --color-tertiary-container: hsl(30, 73%, 24%);
+  --color-on-tertiary-container: hsl(26, 100%, 88%);
+  --color-error: hsl(0, 100%, 80%);
+  --color-on-error: hsl(358, 100%, 20%);
+  --color-error-container: hsl(358, 100%, 30%);
+  --color-on-error-container: hsl(0, 100%, 90%);
+  --color-background: hsl(220, 10%, 6%);
+  --color-on-background: hsl(240, 12%, 90%);
+  --color-surface: hsl(220, 10%, 6%);
+  --color-on-surface: hsl(240, 12%, 90%);
+  --color-surface-variant: hsl(200, 2%, 28%);
+  --color-on-surface-variant: hsl(200, 3%, 78%);
+  --color-outline: hsl(200, 1%, 57%);
+  --color-outline-variant: hsl(200, 2%, 28%);
+  --color-inverse-surface: hsl(240, 12%, 90%);
+  --color-inverse-on-surface: hsl(230, 6%, 20%);
+  --color-inverse-primary: hsl(225, 27%, 42%);
+  --color-surface-dim: hsl(220, 10%, 6%);
+  --color-surface-bright: hsl(227, 6%, 24%);
+  --color-surface-container-lowest: hsl(220, 10%, 4%);
+  --color-surface-container-low: hsl(220, 10%, 11%);
+  --color-surface-container: hsl(225, 8%, 12%);
+  --color-surface-container-high: hsl(225, 7%, 17%);
+  --color-surface-container-highest: hsl(227, 6%, 22%);
+  }
+}
+
+/* Dark Theme support (class-based) */
+.dark {
+  --color-primary: hsl(223, 48%, 23%);
+  --color-on-primary: hsl(223, 48%, 23%);
+  --color-primary-container: hsl(224, 35%, 33%);
+  --color-on-primary-container: hsl(229, 100%, 93%);
+  --color-secondary: hsl(197, 45%, 76%);
+  --color-on-secondary: hsl(193, 78%, 15%);
+  --color-secondary-container: hsl(195, 41%, 25%);
+  --color-on-secondary-container: hsl(197, 82%, 87%);
+  --color-tertiary: hsl(28, 92%, 75%);
+  --color-on-tertiary: hsl(31, 100%, 15%);
+  --color-tertiary-container: hsl(30, 73%, 24%);
+  --color-on-tertiary-container: hsl(26, 100%, 88%);
+  --color-error: hsl(0, 100%, 80%);
+  --color-on-error: hsl(358, 100%, 20%);
+  --color-error-container: hsl(358, 100%, 30%);
+  --color-on-error-container: hsl(0, 100%, 90%);
+  --color-background: hsl(220, 10%, 6%);
+  --color-on-background: hsl(240, 12%, 90%);
+  --color-surface: hsl(220, 10%, 6%);
+  --color-on-surface: hsl(240, 12%, 90%);
+  --color-surface-variant: hsl(200, 2%, 28%);
+  --color-on-surface-variant: hsl(200, 3%, 78%);
+  --color-outline: hsl(200, 1%, 57%);
+  --color-outline-variant: hsl(200, 2%, 28%);
+  --color-inverse-surface: hsl(240, 12%, 90%);
+  --color-inverse-on-surface: hsl(230, 6%, 20%);
+  --color-inverse-primary: hsl(225, 27%, 42%);
+  --color-surface-dim: hsl(220, 10%, 6%);
+  --color-surface-bright: hsl(227, 6%, 24%);
+  --color-surface-container-lowest: hsl(220, 10%, 4%);
+  --color-surface-container-low: hsl(220, 10%, 11%);
+  --color-surface-container: hsl(225, 8%, 12%);
+  --color-surface-container-high: hsl(225, 7%, 17%);
+  --color-surface-container-highest: hsl(227, 6%, 22%);
+}
