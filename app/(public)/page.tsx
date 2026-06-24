@@ -1,11 +1,12 @@
 import Link from "next/link";
+import { RotatingWord } from "@/components/rotating-word";
 
 export default function Home() {
   return (
     <div className="flex-1 flex flex-col items-center justify-center px-6 bg-surface-container-lowest">
       <div className="max-w-2xl mx-auto text-center">
         <h1 className="font-display-small text-on-surface mb-4">
-          Turn ideas into content briefs.
+          Turn <RotatingWord /> into content briefs
         </h1>
         <p className="font-body-large text-on-surface-variant mb-8 max-w-lg mx-auto">
           BriefStack helps content marketers turn rough ideas into structured,
@@ -25,19 +26,19 @@ export default function Home() {
         <div className="p-4 rounded-xl bg-surface border border-outline-variant">
           <h3 className="font-title-small text-on-surface mb-1">Input</h3>
           <p className="font-body-small text-on-surface-variant">
-            Topic, audience, content type, and funnel stage.
+            Add your topic, audience, and content details.
           </p>
         </div>
         <div className="p-4 rounded-xl bg-surface border border-outline-variant">
           <h3 className="font-title-small text-on-surface mb-1">Generate</h3>
           <p className="font-body-small text-on-surface-variant">
-            AI-powered strategic brief in seconds.
+            Create a structured, writer-ready brief in seconds.
           </p>
         </div>
         <div className="p-4 rounded-xl bg-surface border border-outline-variant">
           <h3 className="font-title-small text-on-surface mb-1">Export</h3>
           <p className="font-body-small text-on-surface-variant">
-            Copy, download markdown, or save for later.
+            Copy, download, or save your brief for later.
           </p>
         </div>
       </div>
