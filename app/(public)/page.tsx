@@ -5,11 +5,11 @@ export default function Home() {
     <div className="flex-1 flex flex-col items-center justify-center px-6 bg-surface-container-lowest">
       <div className="max-w-2xl mx-auto text-center">
         <h1 className="font-display-small text-on-surface mb-4">
-          Turn ideas into <span className="text-primary">strategic briefs</span>
+          Turn ideas into content briefs.
         </h1>
         <p className="font-body-large text-on-surface-variant mb-8 max-w-lg mx-auto">
-          BriefStack is an AI content strategist that transforms simple content
-          ideas into structured, writer-ready briefs.
+          BriefStack helps content marketers turn rough ideas into structured,
+          consistent briefs without starting from scratch every time.
         </p>
         <div className="flex items-center justify-center gap-4">
           <Link
