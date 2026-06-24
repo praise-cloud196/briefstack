@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/db/prisma'
 import { createResetToken } from '@/lib/auth/reset-token'
+import { sendPasswordResetEmail } from '@/lib/email'
 
 export async function POST(request: Request) {
   try {
@@ -15,23 +16,30 @@ export async function POST(request: Request) {
 
     const user = await prisma.user.findUnique({ where: { email } })
 
-    // Always return success to prevent email enumeration
+    // Always return the same response to prevent email enumeration
     if (!user) {
       return NextResponse.json(
-        { message: 'If an account with that email exists, a reset link has been generated.' },
+        { message: 'If an account with that email exists, a reset link has been sent.' },
         { status: 200 }
       )
     }
 
     const token = await createResetToken(email)
-    const resetUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/auth/reset/confirm?token=${token}`
+    const origin = process.env.NEXTAUTH_URL || 'http://localhost:3000'
+    const resetUrl = `${origin}/auth/reset/confirm?token=${token}`
 
-    // Log for dev — replace with email transport in production
-    console.log(`[RESET] Password reset requested for ${email}: ${resetUrl}`)
+    const emailSent = await sendPasswordResetEmail(email, resetUrl)
+
+    // In development, include a direct link for convenience
+    if (!emailSent && process.env.NODE_ENV === 'development') {
+      return NextResponse.json({
+        message: 'If an account with that email exists, a reset link has been sent.',
+        devUrl: resetUrl,
+      })
+    }
 
     return NextResponse.json({
-      message: 'If an account with that email exists, a reset link has been generated.',
-      ...(process.env.NODE_ENV === 'development' && { devUrl: resetUrl }),
+      message: 'If an account with that email exists, a reset link has been sent.',
     })
   } catch (error) {
     console.error('Reset request error:', error)
