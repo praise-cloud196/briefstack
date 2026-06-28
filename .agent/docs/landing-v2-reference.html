@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BriefStack – AI-Powered Content Briefs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #0b0b18;
+            --bg-card: #12122a;
+            --bg-input: #151530;
+            --border: rgba(120, 100, 255, 0.18);
+            --text: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.55);
+            --text-sub: rgba(255, 255, 255, 0.72);
+            --accent: #7c5cfc;
+            --accent-hover: #6b4de0;
+            --accent-soft: rgba(124, 92, 252, 0.15);
+            --badge-bg: rgba(124, 92, 252, 0.12);
+            --badge-text: #a98dff;
+            --chip-bg: rgba(255, 255, 255, 0.06);
+            --chip-border: rgba(255, 255, 255, 0.12);
+            --chip-sel: #7c5cfc;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --panel-bg: #12122a;
+            --panel-border: rgba(120, 100, 255, 0.2);
+            --logo-text: #ffffff;
+            --nav-bg: rgba(11, 11, 24, 0.85);
+            --input-ph: rgba(255, 255, 255, 0.3);
+        }
+
+        [data-theme="light"] {
+            --bg: #f3f4f9;
+            --bg-card: #ffffff;
+            --bg-input: #ffffff;
+            --border: rgba(100, 80, 220, 0.15);
+            --text: #111827;
+            --text-muted: #6b7280;
+            --text-sub: #374151;
+            --accent: #5b4fcf;
+            --accent-hover: #4a3fbd;
+            --accent-soft: rgba(91, 79, 207, 0.08);
+            --badge-bg: rgba(91, 79, 207, 0.08);
+            --badge-text: #5b4fcf;
+            --chip-bg: #f3f4f9;
+            --chip-border: #d1d5db;
+            --chip-sel: #5b4fcf;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --panel-bg: #ffffff;
+            --panel-border: rgba(100, 80, 220, 0.15);
+            --logo-text: #111827;
+            --nav-bg: rgba(243, 244, 249, 0.9);
+            --input-ph: #9ca3af;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--logo-text);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr;
+            gap: 3px;
+        }
+
+        .logo-icon span {
+            background: var(--accent);
+            border-radius: 2px;
+            display: block;
+        }
+
+        .logo-icon span:nth-child(2) {
+            width: 70%;
+        }
+
+        .logo-icon span:nth-child(3) {
+            width: 50%;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-ghost {
+            background: none;
+            border: none;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            transition: color 0.2s;
+        }
+
+        .btn-ghost:hover {
+            color: var(--text);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.5rem 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .theme-toggle {
+            background: var(--chip-bg);
+            border: 1px solid var(--chip-border);
+            border-radius: 6px;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-muted);
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--text);
+        }
+
+        /* ── HERO ── */
+        .hero {
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            font-size: 0.78rem;
+            font-weight: 500;
+            padding: 0.35rem 0.85rem;
+            border-radius: 100px;
+            margin-bottom: 1.8rem;
+            letter-spacing: 0.01em;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 6vw, 3.8rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.2rem;
+            color: var(--text);
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+            max-width: 540px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* ── INPUT ── */
+        .input-wrap {
+            position: relative;
+            max-width: 620px;
+            margin: 0 auto 1rem;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1rem 1rem 1rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            box-shadow: var(--shadow);
+            text-align: left;
+            transition: border-color 0.2s;
+        }
+
+        .input-wrap:focus-within {
+            border-color: var(--accent);
+        }
+
+        .input-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+        }
+
+        .input-star {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        .input-field {
+            flex: 1;
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text);
+            font-size: 0.98rem;
+            font-family: 'Inter', sans-serif;
+            resize: none;
+            min-height: 26px;
+        }
+
+        .input-field::placeholder {
+            color: var(--input-ph);
+        }
+
+        .input-hint {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            padding-left: 1.7rem;
+        }
+
+        .input-send {
+            position: absolute;
+            right: 1rem;
+            bottom: 1rem;
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border: none;
+            border-radius: 9px;
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .input-send:hover {
+            background: var(--accent-hover);
+            transform: scale(1.05);
+        }
+
+        /* ── OR DIVIDER ── */
+        .or-row {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            max-width: 620px;
+            margin: 0 auto 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .or-row::before,
+        .or-row::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ── CUSTOMIZE BTN ── */
+        .btn-customize {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--accent);
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.75rem 1.8rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            margin-bottom: 0.6rem;
+        }
+
+        .btn-customize:hover {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        .customize-sub {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        /* ── STEPS ── */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            max-width: 900px;
+            margin: 3rem auto 0;
+            padding: 0 2rem;
+        }
+
+        .step-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.4rem 1.4rem 1.5rem;
+            text-align: left;
+            transition: border-color 0.2s;
+        }
+
+        .step-card:hover {
+            border-color: var(--accent);
+        }
+
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-soft);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            margin-bottom: 0.9rem;
+            color: var(--accent);
+        }
+
+        .step-card h3 {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.35rem;
+        }
+
+        .step-card p {
+            font-size: 0.83rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ── TRUSTED ── */
+        .trusted {
+            padding: 3rem 2rem 4rem;
+            text-align: center;
+        }
+
+        .trusted-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1.4rem;
+            letter-spacing: 0.02em;
+        }
+
+        .logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+            opacity: 0.55;
+        }
+
+        .logos span {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+
+        /* ── PANEL OVERLAY ── */
+        .panel-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 200;
+            display: none;
+            align-items: flex-start;
+            justify-content: flex-end;
+            padding: 1rem 1rem 0 0;
+        }
+
+        .panel-overlay.open {
+            display: flex;
+        }
+
+        .customize-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            width: 360px;
+            max-height: calc(100vh - 80px);
+            overflow-y: auto;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-top: 68px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 0.3rem;
+        }
+
+        .panel-header h2 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .panel-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .panel-close:hover {
+            color: var(--text);
+        }
+
+        .panel-sub {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 1.4rem;
+            line-height: 1.5;
+        }
+
+        .field-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-sub);
+            margin-bottom: 0.45rem;
+            display: block;
+        }
+
+        .field-input {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.6rem 0.85rem;
+            font-size: 0.85rem;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            margin-bottom: 1.1rem;
+            transition: border-color 0.2s;
+        }
+
+        .field-input::placeholder {
+            color: var(--input-ph);
+        }
+
+        .field-input:focus {
+            border-color: var(--accent);
+        }
+
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 0.7rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+
+        .accordion-header span {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .accordion-arrow {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            transition: transform 0.2s;
+        }
+
+        .accordion-header.open .accordion-arrow {
+            transform: rotate(180deg);
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .chip {
+            background: var(--chip-bg);
+            border: 1px solid var(--chip-border);
+            border-radius: 100px;
+            padding: 0.35rem 0.85rem;
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s, color 0.15s;
+        }
+
+        .chip:hover {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+
+        .chip.selected {
+            background: var(--chip-sel);
+            border-color: var(--chip-sel);
+            color: #fff;
+        }
+
+        .custom-type-input {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.55rem 0.85rem;
+            font-size: 0.82rem;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .custom-type-input::placeholder {
+            color: var(--input-ph);
+        }
+
+        .custom-type-input:focus {
+            border-color: var(--accent);
+        }
+
+        .advanced-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 0.83rem;
+            margin-bottom: 1.4rem;
+            border: none;
+            background: none;
+            padding: 0;
+        }
+
+        .advanced-toggle:hover {
+            color: var(--text);
+        }
+
+        .btn-create {
+            width: 100%;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 0.85rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .btn-create:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 640px) {
+            .steps {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+
+            .hero {
+                padding: 4rem 1rem 2rem;
+            }
+
+            nav {
+                padding: 0 1rem;
+            }
+
+            .customize-panel {
+                width: calc(100vw - 2rem);
+            }
+
+            .logos {
+                gap: 1.2rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="#" class="logo">
+            <span class="logo-icon">
+                <span></span><span></span><span></span>
+            </span>
+            BriefStack
+        </a>
+        <div class="nav-right">
+            <button class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+            <button class="btn-ghost">Sign In</button>
+            <button class="btn-primary" onclick="openPanel()">Create Brief</button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="badge">✦ AI-Powered Content Briefs</div>
+        <h1>Turn topics into<br><span>content briefs</span></h1>
+        <p>BriefStack helps content marketers turn rough ideas into structured, consistent briefs without starting from
+            scratch every time.</p>
+
+        <!-- Input -->
+        <div class="input-wrap">
+            <div class="input-row">
+                <span class="input-star">✦</span>
+                <textarea class="input-field" rows="1" placeholder="Describe your brief..."
+                    oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+            </div>
+            <div class="input-hint">e.g., Create a blog post brief about B2B content marketing trends for 2026</div>
+            <button class="input-send">→</button>
+        </div>
+
+        <!-- Or -->
+        <div class="or-row">or</div>
+
+        <!-- Customize -->
+        <div>
+            <button class="btn-customize" onclick="openPanel()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+                Customize Brief Details
+            </button>
+            <div class="customize-sub">Fine-tune your audience, content type, and goals</div>
+        </div>
+    </section>
+
+    <!-- STEPS -->
+    <div class="steps">
+        <div class="step-card">
+            <div class="step-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5" />
+                    <path d="M7 7h6M7 10h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                    <path d="M13 14l2-2-2-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+            <h3>Input</h3>
+            <p>Add your topic, audience, and content details.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path
+                        d="M10 3v3M10 14v3M3 10h3M14 10h3M5.6 5.6l2.1 2.1M12.3 12.3l2.1 2.1M5.6 14.4l2.1-2.1M12.3 7.7l2.1-2.1"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+            </div>
+            <h3>Generate</h3>
+            <p>Create a structured, writer-ready brief in seconds.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M10 3v9M7 9l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M4 14v1a2 2 0 002 2h8a2 2 0 002-2v-1" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" />
+                </svg>
+            </div>
+            <h3>Export</h3>
+            <p>Copy, download, or save your brief for later.</p>
+        </div>
+    </div>
+
+    <!-- TRUSTED -->
+    <div class="trusted">
+        <p class="trusted-label">Trusted by content teams at</p>
+        <div class="logos">
+            <span>HubSpot</span>
+            <span>ahrefs</span>
+            <span>SEMRUSH</span>
+            <span>Notion</span>
+            <span>clickup</span>
+        </div>
+    </div>
+
+    <!-- CUSTOMIZE PANEL OVERLAY -->
+    <div class="panel-overlay" id="panelOverlay" onclick="closeOnBackdrop(event)">
+        <div class="customize-panel" id="customizePanel">
+            <div class="panel-header">
+                <h2>Customize Your Brief</h2>
+                <button class="panel-close" onclick="closePanel()">✕</button>
+            </div>
+            <p class="panel-sub">Add a few details and create a complete content brief in seconds.</p>
+
+            <label class="field-label">Topic or Keyword *</label>
+            <input class="field-input" type="text" placeholder="e.g., B2B content marketing trends for 2026" />
+
+            <!-- Accordion -->
+            <div class="accordion-header open" id="accordionHeader" onclick="toggleAccordion()">
+                <span>Audience &amp; Content Details</span>
+                <span class="accordion-arrow">▲</span>
+            </div>
+
+            <div id="accordionBody">
+                <label class="field-label">Target Audience</label>
+                <input class="field-input" type="text" placeholder="e.g., Marketing Managers at B2B SaaS companies" />
+
+                <label class="field-label">Content Type</label>
+                <div class="chips" id="contentTypeChips">
+                    <span class="chip" onclick="selectChip(this,'contentTypeChips')">Blog Post</span>
+                    <span class="chip" onclick="selectChip(this,'contentTypeChips')">LinkedIn Post</span>
+                    <span class="chip" onclick="selectChip(this,'contentTypeChips')">Landing Page</span>
+                    <span class="chip" onclick="selectChip(this,'contentTypeChips')">Email Sequence</span>
+                    <span class="chip selected" onclick="selectChip(this,'contentTypeChips')">Other</span>
+                </div>
+                <input class="custom-type-input" type="text" placeholder="Type your own content type…" />
+
+                <label class="field-label">Funnel Stage</label>
+                <div class="chips" id="funnelChips">
+                    <span class="chip" onclick="selectChip(this,'funnelChips')">Awareness</span>
+                    <span class="chip" onclick="selectChip(this,'funnelChips')">Consideration</span>
+                    <span class="chip" onclick="selectChip(this,'funnelChips')">Decision</span>
+                </div>
+            </div>
+
+            <button class="advanced-toggle">▶ Advanced Options</button>
+
+            <button class="btn-create">Create Brief</button>
+        </div>
+    </div>
+
+    <script>
+        // ── Theme ──
+        const html = document.documentElement;
+        const toggle = document.getElementById('themeToggle');
+
+        // Respect OS preference on first load
+        if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+            html.dataset.theme = 'light';
+            toggle.textContent = '☀️';
+        }
+
+        toggle.addEventListener('click', () => {
+            const isDark = html.dataset.theme === 'dark';
+            html.dataset.theme = isDark ? 'light' : 'dark';
+            toggle.textContent = isDark ? '☀️' : '🌙';
+        });
+
+        // ── Panel ──
+        function openPanel() {
+            document.getElementById('panelOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closePanel() {
+            document.getElementById('panelOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        function closeOnBackdrop(e) {
+            if (e.target === document.getElementById('panelOverlay')) closePanel();
+        }
+
+        // ── Accordion ──
+        function toggleAccordion() {
+            const header = document.getElementById('accordionHeader');
+            const body = document.getElementById('accordionBody');
+            const isOpen = header.classList.toggle('open');
+            body.style.display = isOpen ? 'block' : 'none';
+            header.querySelector('.accordion-arrow').textContent = isOpen ? '▲' : '▼';
+        }
+
+        // ── Chips ──
+        function selectChip(el, groupId) {
+            const group = document.getElementById(groupId);
+            group.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+    </script>
+</body>
+
+</html>

@@ -74,10 +74,10 @@ export function BriefForm({ onSubmit }: BriefFormProps) {
   const hasContext = targetAudience || contentType || funnelStage
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      <div>
-        <label htmlFor="topic" className="font-label-medium text-on-surface block mb-1.5">
-          Topic or Keyword <span className="text-error">*</span>
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
+      <div className="modal-body">
+        <label htmlFor="topic" className="field-label">
+          Topic or Keyword <span style={{ color: 'var(--panel-accent)' }}>*</span>
         </label>
         <input
           id="topic"
@@ -85,103 +85,91 @@ export function BriefForm({ onSubmit }: BriefFormProps) {
           required
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
-          className="w-full px-3 py-2.5 border border-outline rounded-lg bg-surface font-body-medium text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary"
+          className="field-input"
           placeholder="e.g., B2B content marketing trends for 2026"
         />
-      </div>
 
-      <div className="border border-outline-variant rounded-lg overflow-hidden">
         <button
           type="button"
           onClick={() => setShowContext(!showContext)}
-          className="w-full flex items-center justify-between gap-3 px-4 py-2.5 bg-surface-container-low hover:bg-surface-container-higher transition-colors text-left"
+          className={`accordion-header${showContext ? ' open' : ''}`}
         >
-          <span className="font-label-medium text-on-surface-variant">
+          <span>
             {hasContext ? 'Context added' : 'Audience & Content Details'}{hasContext ? ' \u2713' : ''}
           </span>
-          <span className={`text-on-surface-variant text-sm leading-none transition-transform duration-200 ${showContext ? 'rotate-180' : ''}`}>
-            ▾
-          </span>
+          <span className="accordion-arrow">▾</span>
         </button>
         {showContext && (
-          <div className="px-4 py-3.5 border-t border-outline-variant space-y-4">
-            <div>
-              <label htmlFor="audience" className="font-label-medium text-on-surface block mb-1.5">
-                Target Audience
-              </label>
+          <div>
+            <label htmlFor="audience" className="field-label">
+              Target Audience
+            </label>
+            <input
+              id="audience"
+              type="text"
+              value={targetAudience}
+              onChange={(e) => setTargetAudience(e.target.value)}
+              className="field-input"
+              placeholder="e.g., Marketing Managers at B2B SaaS companies"
+            />
+
+            <label className="field-label">Content Type</label>
+            <div className="chips">
+              {CONTENT_TYPE_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value || '__other'}
+                  type="button"
+                  onClick={() => setContentType(opt.value)}
+                  className={`chip${contentType === opt.value ? ' selected' : ''}`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+            {contentType === '' && (
               <input
-                id="audience"
                 type="text"
-                value={targetAudience}
-                onChange={(e) => setTargetAudience(e.target.value)}
-                className="w-full px-3 py-2 border border-outline rounded-lg bg-surface font-body-medium text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="e.g., Marketing Managers at B2B SaaS companies"
+                value={contentType}
+                onChange={(e) => setContentType(e.target.value)}
+                className="custom-type-input"
+                placeholder="Type your own content type…"
               />
-            </div>
+            )}
 
-            <div>
-              <label className="font-label-medium text-on-surface block mb-2">
-                Content Type
-              </label>
-              <div className="flex flex-wrap gap-1.5">
-                {CONTENT_TYPE_OPTIONS.map((opt) => (
-                  <button
-                    key={opt.value || '__other'}
-                    type="button"
-                    onClick={() => setContentType(opt.value)}
-                    className={`px-3 py-1.5 rounded-full font-label-small border transition-colors ${
-                      contentType === opt.value
-                        ? 'bg-primary text-on-primary border-primary'
-                        : 'bg-surface text-on-surface-variant border-outline hover:border-primary hover:text-primary'
-                    }`}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
-              {contentType === '' && (
-                <input
-                  type="text"
-                  value={contentType}
-                  onChange={(e) => setContentType(e.target.value)}
-                  className="w-full px-3 py-2 border border-outline rounded-lg bg-surface font-body-medium text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary mt-2"
-                  placeholder="Type your own content type..."
-                />
-              )}
-            </div>
-
-            <div>
-              <label className="font-label-medium text-on-surface block mb-2">
-                Funnel Stage
-              </label>
-              <div className="flex flex-wrap gap-1.5">
-                {FUNNEL_OPTIONS.map((opt) => (
-                  <button
-                    key={opt.value}
-                    type="button"
-                    onClick={() => setFunnelStage(opt.value)}
-                    className={`px-3 py-1.5 rounded-full font-label-small border transition-colors ${
-                      funnelStage === opt.value
-                        ? 'bg-primary text-on-primary border-primary'
-                        : 'bg-surface text-on-surface-variant border-outline hover:border-primary hover:text-primary'
-                    }`}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
+            <label className="field-label">Funnel Stage</label>
+            <div className="chips">
+              {FUNNEL_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => setFunnelStage(opt.value)}
+                  className={`chip${funnelStage === opt.value ? ' selected' : ''}`}
+                >
+                  {opt.label}
+                </button>
+              ))}
             </div>
           </div>
         )}
-      </div>
 
-      <details className="group">
-        <summary className="font-label-medium text-on-surface-variant cursor-pointer hover:text-on-surface transition-colors">
-          Advanced Options
-        </summary>
-        <div className="mt-4 space-y-4">
+        <details className="advanced-toggle">
+          <summary>
+            ▶ Advanced Options{' '}
+            <span style={{
+              fontSize: '0.65rem',
+              color: 'var(--panel-text-muted)',
+              border: '1px solid var(--panel-chip-border)',
+              borderRadius: '4px',
+              padding: '0 6px',
+              lineHeight: '1.5',
+              fontWeight: 400,
+              letterSpacing: '0.02em',
+            }}>
+              Optional
+            </span>
+          </summary>
           <div>
-            <label htmlFor="goal" className="font-label-medium text-on-surface block mb-1.5">
+            <label htmlFor="goal" className="field-label">
               Business Goal
             </label>
             <input
@@ -189,13 +177,11 @@ export function BriefForm({ onSubmit }: BriefFormProps) {
               type="text"
               value={businessGoal}
               onChange={(e) => setBusinessGoal(e.target.value)}
-              className="w-full px-3 py-2 border border-outline rounded-lg bg-surface font-body-medium text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary"
+              className="field-input"
               placeholder="e.g., Generate demo requests"
             />
-          </div>
 
-          <div>
-            <label htmlFor="product" className="font-label-medium text-on-surface block mb-1.5">
+            <label htmlFor="product" className="field-label">
               Product Context
             </label>
             <input
@@ -203,13 +189,11 @@ export function BriefForm({ onSubmit }: BriefFormProps) {
               type="text"
               value={productContext}
               onChange={(e) => setProductContext(e.target.value)}
-              className="w-full px-3 py-2 border border-outline rounded-lg bg-surface font-body-medium text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary"
+              className="field-input"
               placeholder="e.g., Project management SaaS for agencies"
             />
-          </div>
 
-          <div>
-            <label htmlFor="voice" className="font-label-medium text-on-surface block mb-1.5">
+            <label htmlFor="voice" className="field-label">
               Brand Voice
             </label>
             <input
@@ -217,31 +201,33 @@ export function BriefForm({ onSubmit }: BriefFormProps) {
               type="text"
               value={brandVoice}
               onChange={(e) => setBrandVoice(e.target.value)}
-              className="w-full px-3 py-2 border border-outline rounded-lg bg-surface font-body-medium text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary"
+              className="field-input"
               placeholder="e.g., Professional but approachable"
             />
           </div>
-        </div>
-      </details>
+        </details>
 
-      {error && (
-        <p className="font-body-small text-error">{error}</p>
-      )}
-
-      <button
-        type="submit"
-        disabled={isNavigating}
-        className="w-full py-2.5 bg-primary text-on-primary font-label-medium rounded-lg hover:opacity-90 disabled:opacity-60 transition-opacity inline-flex items-center justify-center gap-2"
-      >
-        {isNavigating ? (
-          <>
-            <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-            Creating Brief...
-          </>
-        ) : (
-          'Create Brief'
+        {error && (
+          <p style={{ fontSize: '0.8rem', color: '#ef4444', marginBottom: '0.5rem' }}>{error}</p>
         )}
-      </button>
+      </div>
+
+      <div className="modal-footer">
+        <button
+          type="submit"
+          disabled={isNavigating}
+          className="btn-create"
+        >
+          {isNavigating ? (
+            <>
+              <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+              Creating Brief...
+            </>
+          ) : (
+            'Create Brief'
+          )}
+        </button>
+      </div>
     </form>
   )
 }
