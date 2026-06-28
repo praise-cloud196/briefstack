@@ -3,6 +3,7 @@
 import { useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
 import { Navbar } from '@/components/navbar'
+import { BriefPanelProvider } from '@/components/brief-panel-context'
 import type { ReactNode } from 'react'
 
 export function AppLayoutClient({ children }: { children: ReactNode }) {
@@ -21,9 +22,9 @@ export function AppLayoutClient({ children }: { children: ReactNode }) {
   }
 
   return (
-    <>
+    <BriefPanelProvider>
       <Navbar />
       <main className="flex-1 flex flex-col bg-white">{children}</main>
-    </>
+    </BriefPanelProvider>
   )
 }

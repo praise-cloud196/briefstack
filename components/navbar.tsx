@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 export function Navbar() {
   const pathname = usePathname()
@@ -11,52 +12,33 @@ export function Navbar() {
   if (pathname === '/auth') return null
 
   return (
-    <nav className="sticky top-0 z-50 bg-white py-1">
-      <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
-        <div className="flex items-center gap-4 sm:gap-8">
-          <Link
-            href={session ? '/dashboard' : '/'}
-            className="font-title-large text-primary"
-          >
-            BriefStack
-          </Link>
+    <nav className="nav">
+      <Link href="/dashboard" className="nav-logo">
+        <span className="nav-logo-icon">
+          <span></span><span></span><span></span>
+        </span>
+        BriefStack
+      </Link>
 
-          {session && (
-            <Link
-              href="/history"
-              className={`font-body-large transition-colors ${
-                pathname === '/history'
-                  ? 'text-primary'
-                  : 'text-on-surface-variant hover:text-on-surface'
-              }`}
-            >
-              History
-            </Link>
-          )}
-        </div>
-
-        <div className="flex items-center gap-4">
-          {session ? (
-            <>
-              <span className="font-body-medium text-on-surface-variant hidden sm:block">
-                {session.user?.name || session.user?.email}
-              </span>
-              <button
-                onClick={() => signOut({ callbackUrl: '/' })}
-                className="font-body-large text-on-surface-variant hover:text-on-surface transition-colors"
-              >
-                Sign Out
-              </button>
-            </>
-          ) : (
-            <Link
-              href="/auth"
-              className="font-body-large text-primary hover:underline"
-            >
-              Sign In
-            </Link>
-          )}
-        </div>
+      <div className="nav-right">
+        <ThemeToggle />
+        <Link
+          href="/history"
+          className="nav-btn-ghost"
+        >
+          History
+        </Link>
+        {session && (
+          <span className="hidden sm:inline" style={{ fontSize: '0.85rem', color: 'var(--nav-text-sub)', fontWeight: 500 }}>
+            {session.user?.name || session.user?.email}
+          </span>
+        )}
+        <button
+          onClick={() => signOut({ callbackUrl: '/' })}
+          className="nav-btn-ghost"
+        >
+          Sign Out
+        </button>
       </div>
     </nav>
   )

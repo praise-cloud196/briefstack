@@ -696,10 +696,8 @@ summary {
 }
 
 .supports-label {
-  font-size: 0.8rem;
-  color: var(--supports-text-muted);
+  color: var(--color-on-surface-variant);
   margin-bottom: 1.4rem;
-  letter-spacing: 0.02em;
 }
 
 .supports-items {

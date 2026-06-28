@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useSession } from 'next-auth/react'
 import { redirect, useRouter } from 'next/navigation'
 import type { BriefListItem } from '@/types'
@@ -10,6 +10,7 @@ export default function HistoryPage() {
   const router = useRouter()
   const [briefs, setBriefs] = useState<BriefListItem[]>([])
   const [loading, setLoading] = useState(true)
+  const panelRef = useRef<HTMLDivElement>(null)
 
   if (status === 'unauthenticated') redirect('/auth')
 
@@ -29,15 +30,38 @@ export default function HistoryPage() {
     if (status === 'authenticated') fetchBriefs()
   }, [status, fetchBriefs])
 
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') router.push('/dashboard')
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [router])
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      panelRef.current?.focus()
+    })
+  }, [])
+
   if (status === 'loading') return null
 
   return (
-    <div className="flex-1 max-w-3xl mx-auto w-full p-6">
-      <div className="mb-8">
-        <h1 className="font-headline-small text-on-surface">Brief History</h1>
-        <p className="font-body-medium text-on-surface-variant mt-1">
-          All your saved content briefs.
-        </p>
+    <div className="flex-1 max-w-3xl mx-auto w-full p-6" ref={panelRef} tabIndex={-1}>
+      <div className="mb-8 flex items-start justify-between">
+        <div>
+          <h1 className="font-headline-small text-on-surface">Brief History</h1>
+          <p className="font-body-medium text-on-surface-variant mt-1">
+            All your saved content briefs.
+          </p>
+        </div>
+        <button
+          onClick={() => router.push('/dashboard')}
+          className="modal-close"
+          aria-label="Close history"
+        >
+          ✕
+        </button>
       </div>
 
       {loading ? (
